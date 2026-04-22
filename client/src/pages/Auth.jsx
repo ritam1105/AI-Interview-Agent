@@ -1,6 +1,23 @@
+import { signInWithPopup } from 'firebase/auth'
 import React, { useState, useEffect } from 'react'
-
+import { auth, provider } from '../utils/firebase'
+import { serverUrl } from '../App'
+import axios from 'axios'
 function Auth() {
+  const handleGoogleAuth=async ()=>{
+    try {
+      const response=await signInWithPopup(auth, provider)
+      let User=response.user
+      let name=User.displayName
+      let email=User.email
+      const result=await axios.post(serverUrl+"/api/auth/google" ,{name,email}, {withCredentials:true})
+      console.log(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const [mounted, setMounted] = useState(false)
   const [hovering, setHovering] = useState(false)
 
@@ -112,6 +129,7 @@ function Auth() {
 
         {/* Google Button */}
         <button
+        onClick={handleGoogleAuth}
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
           style={{
