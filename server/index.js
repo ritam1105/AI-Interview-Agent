@@ -5,6 +5,7 @@ import connectDb from './config/connectDB.js';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/authRoute.js';
 import userRouter from './routes/userRoutes.js';
+import interviewRouter from './routes/interviewRoute.js';
 dotenv.config();
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(cookieParser())
 
 app.use("/api/auth",authRouter)
 app.use("/api/user",userRouter)
+app.use("/api/interview",interviewRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on: http://localhost:${PORT}`);
