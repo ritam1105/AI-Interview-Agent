@@ -1,9 +1,9 @@
 import axios from "axios"
 
-export const askAi = async (massage) => {
+export const askAi = async (messages) => {
     try {
-        if (!massage || !Array.isArray(massage) || massage.length == 0) {
-            throw new error("The massage array is empty");
+        if (!messages || !Array.isArray(messages) || messages.length == 0) {
+            throw new Error("The messages array is empty");
         }
         const response = await axios.post("https://openrouter.ai/api/v1/chat/completions",
             {
@@ -17,13 +17,13 @@ export const askAi = async (massage) => {
                 },
             })
 
-        const content = response?.data?.choices?.[0]?.massage?.content;
+        const content = response?.data?.choices?.[0]?.message?.content;
         if (!content || !content.trim()) {
-            throw new error("AI return empty Response")
+            throw new Error("AI returned empty response")
         }
         return content
     } catch (error) {
-        console.log("OpenRouter Error:", error.response?.data || error.massage)
+        console.log("OpenRouter Error:", error.response?.data || error.message)
         throw new Error("OpenRouter API error");
 
     }

@@ -5,16 +5,16 @@ const isAuth=async (req,res,next)=>{
         let {token}=req.cookies
 
         if(!token){
-            return res.status(400).json({massage:"User does not have any Token"})
+            return res.status(400).json({message:"User does not have any Token"})
         }
         const verifyToken=jwt.verify(token, process.env.JWT_SECRET)
         if(!verifyToken){
-            return res.status(400).json({massage:"User does not have a valid Token"})
+            return res.status(400).json({message:"User does not have a valid Token"})
         }
         req.userId=verifyToken.userId
         next()
     } catch (error) {
-        return res.status(400).json({massage:`IsAuth error${error}`})
+        return res.status(400).json({message:`IsAuth error${error}`})
     }
 }
 export default isAuth
