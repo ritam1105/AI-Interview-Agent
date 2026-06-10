@@ -1,7 +1,7 @@
 import { signInWithPopup } from 'firebase/auth'
 import React, { useState, useEffect } from 'react'
 import { auth, provider } from '../utils/firebase'
-import { serverUrl } from '../App'
+import {ServerUrl } from '../App'
 import axios from 'axios'
 import { setUserData } from '../redux/userSlice'
 import { useDispatch } from 'react-redux'
@@ -16,7 +16,7 @@ function Auth({ isModel = false }) {
       let name = User.displayName
       let email = User.email
       const result = await axios.post(
-        serverUrl + "/api/auth/google",
+        ServerUrl + "/api/auth/google",
         { name, email },
         { withCredentials: true }
       )

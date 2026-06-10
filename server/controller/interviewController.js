@@ -52,7 +52,7 @@ Return strictly JSON:
         res.json({
             role:parsed.role,
             experience:parsed.experience,
-            project:parsed.project,
+            projects:parsed.projects,
             skills:parsed.skills,
             resumeText
         });
