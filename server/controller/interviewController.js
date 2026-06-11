@@ -47,7 +47,7 @@ Return strictly JSON:
             }
         ];
         const aiResponse = await askAi(messages)
-        const cleaned = aiResponse.replace(/```json|```/g, "").trim()  
+        const cleaned = aiResponse.replace(/```json|```/g, "").trim()
         const parsed = JSON.parse(cleaned)
         fs.unlinkSync(filepath)
 
@@ -193,8 +193,11 @@ export const submitAnswer = async (req, res) => {
     try {
         const { interviewId, questionIndex, answer, timeTaken } = req.body
 
-        const interview = await Interview.findById(interviewId)
-        const question = interview.questions[questionIndex]
+        const interview = await Interview.findById(interviewId);
+        if (!interview) return res.status(404).json({ message: "Interview not found" });
+
+        const question = interview.questions[questionIndex];
+        if (!question) return res.status(404).json({ message: "Question not found" });
 
         // If no answer
         if (!answer) {
@@ -272,8 +275,10 @@ Answer: ${answer}
 `
             }
         ];
-        const cleaned = airiResponse.replace(/```json|```/g, "").trim()  // ✅
-        const parsed = JSON.parse(cleaned)
+        // ✅
+        const aiResponse = await askAi(messages);
+        const cleaned = aiResponse.replace(/```json|```/g, "").trim();
+        const parsed = JSON.parse(cleaned);
         question.answer = answer;
         question.confidence = parsed.confidence;
         question.communication = parsed.communication;
@@ -326,7 +331,7 @@ export const finishInterview = async (req, res) => {
             : 0;
 
         interview.finalScore = finalScore;
-        interview.status = "completed";
+        interview.status = "Completed";
 
         await interview.save();
 
