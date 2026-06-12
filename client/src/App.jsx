@@ -11,7 +11,7 @@ import InterviewHistory from './pages/InterviewHistory';
 import InterviewReport from './pages/InterviewReport';
 
 
-export const ServerUrl="http://localhost:8000"
+export const ServerUrl="https://ai-interview-agent-six-rho.vercel.app/"
 
 function App() {
   const dispatch=useDispatch()
